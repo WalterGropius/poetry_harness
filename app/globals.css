@@ -1,0 +1,540 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   VERSO — a clean modernist spaceship. Two hulls: NIGHT (cockpit) and PAPER.
+   Surfaces are physical: keys are bevelled and travel, screens are recessed,
+   panels are machined plates with hairline seams.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+:root,
+:root[data-theme="night"] {
+  color-scheme: dark;
+  --bg: #0b0c0e;
+  --bg-2: #101215;
+  --bg-3: #15181c;
+  --bg-sunk: #070809;
+  --plate: linear-gradient(180deg, #13161a 0%, #0f1114 100%);
+  --line: rgba(255, 255, 255, 0.065);
+  --line-2: rgba(255, 255, 255, 0.11);
+  --line-3: rgba(255, 255, 255, 0.2);
+  --ink: #ebe7df;
+  --ink-2: #a8a49c;
+  --ink-3: #6b6964;
+  --ink-4: #45443f;
+  --verse: #f1eadc;
+  --accent: #ff6a2b;
+  --accent-ink: #160a04;
+  --accent-soft: rgba(255, 106, 43, 0.14);
+  --ion: #7fe0d2;
+  --ion-soft: rgba(127, 224, 210, 0.13);
+  --ok: #8fe388;
+  --warn: #f7c948;
+  --bad: #ff6b6b;
+  --key-top: #2b3037;
+  --key-bot: #1a1d22;
+  --key-edge: #030304;
+  --key-hi: rgba(255, 255, 255, 0.13);
+  --key-shadow: rgba(0, 0, 0, 0.75);
+  --screen-glow: rgba(127, 224, 210, 0.05);
+  --grid-dot: rgba(255, 255, 255, 0.045);
+}
+
+:root[data-theme="paper"] {
+  color-scheme: light;
+  --bg: #ece8df;
+  --bg-2: #f4f1ea;
+  --bg-3: #fbf9f4;
+  --bg-sunk: #e2ddd1;
+  --plate: linear-gradient(180deg, #f8f5ee 0%, #efebe2 100%);
+  --line: rgba(28, 24, 18, 0.08);
+  --line-2: rgba(28, 24, 18, 0.14);
+  --line-3: rgba(28, 24, 18, 0.26);
+  --ink: #1c1a17;
+  --ink-2: #5a564f;
+  --ink-3: #8a857b;
+  --ink-4: #b5afa4;
+  --verse: #1c1a17;
+  --accent: #e4531b;
+  --accent-ink: #fff6f0;
+  --accent-soft: rgba(228, 83, 27, 0.1);
+  --ion: #127a6d;
+  --ion-soft: rgba(18, 122, 109, 0.1);
+  --ok: #2f8f2a;
+  --warn: #b98500;
+  --bad: #c43c3c;
+  --key-top: #fdfbf7;
+  --key-bot: #e6e1d6;
+  --key-edge: #a49c8d;
+  --key-hi: rgba(255, 255, 255, 0.95);
+  --key-shadow: rgba(60, 50, 35, 0.32);
+  --screen-glow: rgba(18, 122, 109, 0.04);
+  --grid-dot: rgba(28, 24, 18, 0.06);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-2: var(--bg-2);
+  --color-bg-3: var(--bg-3);
+  --color-sunk: var(--bg-sunk);
+  --color-line: var(--line);
+  --color-line-2: var(--line-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-ink-4: var(--ink-4);
+  --color-verse: var(--verse);
+  --color-accent: var(--accent);
+  --color-ion: var(--ion);
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
+  --color-bad: var(--bad);
+  --font-sans: "Inter Tight Variable", "Inter Tight", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-verse: "Newsreader Variable", "Newsreader", "Iowan Old Style", Georgia, serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+body {
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  min-height: 100dvh;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* Machined background: a faint dot lattice like a perforated bulkhead. */
+.hull {
+  background-color: var(--bg);
+  background-image: radial-gradient(var(--grid-dot) 1px, transparent 1px);
+  background-size: 22px 22px;
+  background-position: -11px -11px;
+}
+
+/* ── Type ─────────────────────────────────────────────────────────────────── */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.mono {
+  font-family: var(--font-mono);
+}
+.verse {
+  font-family: var(--font-verse);
+  font-optical-sizing: auto;
+  color: var(--verse);
+}
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Plates & screens ─────────────────────────────────────────────────────── */
+.plate {
+  background: var(--plate);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow:
+    inset 0 1px 0 var(--key-hi),
+    0 1px 0 rgba(0, 0, 0, 0.35),
+    0 18px 40px -28px var(--key-shadow);
+}
+:root[data-theme="paper"] .plate {
+  box-shadow:
+    inset 0 1px 0 var(--key-hi),
+    0 1px 0 rgba(60, 50, 35, 0.08),
+    0 18px 40px -30px var(--key-shadow);
+}
+.seam {
+  border-color: var(--line);
+}
+/* A recessed instrument display. */
+.screen {
+  background: var(--bg-sunk);
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  box-shadow:
+    inset 0 2px 6px rgba(0, 0, 0, 0.55),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.25),
+    inset 0 0 40px var(--screen-glow),
+    0 1px 0 var(--key-hi);
+}
+:root[data-theme="paper"] .screen {
+  box-shadow:
+    inset 0 2px 5px rgba(60, 50, 35, 0.18),
+    inset 0 0 0 1px rgba(60, 50, 35, 0.06),
+    0 1px 0 var(--key-hi);
+}
+
+/* ── Keys: bevelled, with travel ──────────────────────────────────────────── */
+.key {
+  --k-top: var(--key-top);
+  --k-bot: var(--key-bot);
+  --k-ink: var(--ink);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 9px;
+  color: var(--k-ink);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: linear-gradient(180deg, var(--k-top), var(--k-bot));
+  border: 1px solid var(--key-edge);
+  box-shadow:
+    inset 0 1px 0 var(--key-hi),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.25),
+    0 3px 0 -0.5px var(--key-edge),
+    0 4px 9px -3px var(--key-shadow);
+  transform: translateY(0);
+  transition:
+    transform 70ms ease,
+    box-shadow 70ms ease,
+    filter 120ms ease;
+  user-select: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.key:hover {
+  filter: brightness(1.08);
+}
+:root[data-theme="paper"] .key:hover {
+  filter: brightness(1.02);
+}
+.key:active,
+.key[data-pressed="true"] {
+  transform: translateY(2.5px);
+  box-shadow:
+    inset 0 1px 0 var(--key-hi),
+    inset 0 2px 4px rgba(0, 0, 0, 0.28),
+    0 0.5px 0 var(--key-edge),
+    0 1px 3px -1px var(--key-shadow);
+}
+.key:focus-visible {
+  outline: 2px solid var(--ion);
+  outline-offset: 3px;
+}
+.key:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: none;
+}
+.key-accent {
+  --k-top: #ff8752;
+  --k-bot: #f15a1b;
+  --k-ink: #1b0b03;
+  border-color: #9c3409;
+}
+:root[data-theme="paper"] .key-accent {
+  --k-top: #f2733c;
+  --k-bot: #d84c12;
+  --k-ink: #fff7f2;
+  border-color: #9c3409;
+}
+.key-ion {
+  --k-top: #9ff0e4;
+  --k-bot: #5fc9ba;
+  --k-ink: #04201c;
+  border-color: #2d7f74;
+}
+.key-ghost {
+  background: transparent;
+  border-color: var(--line-2);
+  box-shadow: none;
+}
+.key-ghost:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+.key-sm {
+  height: 28px;
+  padding: 0 10px;
+  font-size: 10px;
+  border-radius: 7px;
+}
+.key-lg {
+  height: 52px;
+  padding: 0 22px;
+  font-size: 12px;
+  border-radius: 12px;
+}
+.key-square {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+}
+
+/* LED indicator on keys */
+.led {
+  width: 6px;
+  height: 6px;
+  border-radius: 99px;
+  background: var(--ink-4);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.5);
+  flex: none;
+}
+.led[data-on="true"] {
+  background: var(--accent);
+  box-shadow:
+    0 0 6px var(--accent),
+    0 0 14px var(--accent-soft);
+}
+.led[data-tone="ion"][data-on="true"] {
+  background: var(--ion);
+  box-shadow:
+    0 0 6px var(--ion),
+    0 0 14px var(--ion-soft);
+}
+.led[data-tone="ok"][data-on="true"] {
+  background: var(--ok);
+  box-shadow: 0 0 6px var(--ok);
+}
+
+/* Recessed track for rockers & segmented switches */
+.track {
+  display: inline-flex;
+  padding: 3px;
+  gap: 2px;
+  border-radius: 11px;
+  background: var(--bg-sunk);
+  border: 1px solid var(--line);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.45);
+}
+:root[data-theme="paper"] .track {
+  box-shadow: inset 0 2px 4px rgba(60, 50, 35, 0.16);
+}
+.track > button {
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  transition:
+    color 120ms,
+    background 120ms,
+    box-shadow 120ms;
+}
+.track > button:hover {
+  color: var(--ink);
+}
+.track > button[aria-pressed="true"] {
+  color: var(--ink);
+  background: linear-gradient(180deg, var(--key-top), var(--key-bot));
+  box-shadow:
+    inset 0 1px 0 var(--key-hi),
+    0 1px 0 var(--key-edge),
+    0 2px 5px -2px var(--key-shadow);
+}
+
+/* Fields */
+.field {
+  width: 100%;
+  background: var(--bg-sunk);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--ink);
+  padding: 10px 12px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.35);
+  outline: none;
+  transition:
+    border-color 120ms,
+    box-shadow 120ms;
+}
+:root[data-theme="paper"] .field {
+  box-shadow: inset 0 2px 3px rgba(60, 50, 35, 0.12);
+}
+.field:focus {
+  border-color: color-mix(in oklab, var(--ion) 55%, transparent);
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.35),
+    0 0 0 3px var(--ion-soft);
+}
+.field::placeholder {
+  color: var(--ink-3);
+}
+select.field {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--ink-3) 50%), linear-gradient(135deg, var(--ink-3) 50%, transparent 50%);
+  background-position:
+    calc(100% - 16px) 50%,
+    calc(100% - 11px) 50%;
+  background-size: 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 28px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  border: 1px solid var(--line-2);
+  background: color-mix(in oklab, var(--bg-3) 70%, transparent);
+  white-space: nowrap;
+}
+.chip-lit {
+  color: var(--ion);
+  border-color: color-mix(in oklab, var(--ion) 40%, transparent);
+  background: var(--ion-soft);
+}
+.chip-accent {
+  color: var(--accent);
+  border-color: color-mix(in oklab, var(--accent) 40%, transparent);
+  background: var(--accent-soft);
+}
+
+/* ── Scansion tiles ───────────────────────────────────────────────────────── */
+.syl {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 1.4ch;
+  padding: 2px 2px 1px;
+  border-radius: 5px;
+  line-height: 1.15;
+}
+.syl-strong {
+  background: linear-gradient(180deg, color-mix(in oklab, var(--accent) 22%, transparent), color-mix(in oklab, var(--accent) 6%, transparent));
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, var(--accent) 45%, transparent),
+    0 1px 0 rgba(0, 0, 0, 0.35);
+}
+.syl-second {
+  background: color-mix(in oklab, var(--accent) 8%, transparent);
+}
+.syl-elided {
+  opacity: 0.32;
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+.syl-emuet {
+  color: var(--ion);
+}
+.syl-dev {
+  outline: 1px dashed color-mix(in oklab, var(--warn) 70%, transparent);
+  outline-offset: -1px;
+}
+.syl-long::after {
+  content: "";
+  position: absolute;
+  left: 22%;
+  right: 22%;
+  top: 0;
+  height: 1.5px;
+  border-radius: 2px;
+  background: var(--ink-2);
+}
+.mark {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--ink-3);
+  margin-top: 1px;
+}
+
+/* Rhyme-family underline (flow view). --fam is set inline. */
+.fam {
+  border-radius: 4px;
+  background: color-mix(in oklab, var(--fam) 20%, transparent);
+  box-shadow: inset 0 -2px 0 var(--fam);
+  padding: 0 1px;
+}
+
+/* ── Motion ───────────────────────────────────────────────────────────────── */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.rise {
+  animation: rise 360ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@keyframes pulse-ion {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+.pulse {
+  animation: pulse-ion 1.6s ease-in-out infinite;
+}
+@keyframes scan {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+.scanline {
+  position: relative;
+  overflow: hidden;
+}
+.scanline::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--ion) 18%, transparent), transparent);
+  animation: scan 1.4s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise,
+  .pulse,
+  .scanline::after {
+    animation: none;
+  }
+  .key {
+    transition: none;
+  }
+}
+
+/* Scrollbars that belong to the machine */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-3) transparent;
+}
+
+/* json-render spread typography */
+.lens h2 {
+  font-family: var(--font-verse);
+}
